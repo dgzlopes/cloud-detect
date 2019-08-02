@@ -20,7 +20,7 @@
 >>> provider(excluded='aws')
 'unknown'
 ```
-> Note: Right know the only posible responses are: 'aws', 'gcp' or 'unknown'
+> Right now the only possible responses are: 'aws', 'gcp' or 'unknown'
 ## Installation
 Via pip:
 ```
