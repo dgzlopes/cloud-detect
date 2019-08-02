@@ -1,0 +1,15 @@
+*.egg-info
+*.py[co]
+*.sw[op]
+
+/.coverage
+/.pytest_cache
+/.tox
+/venv*
+/tmp
+/build
+
+.*ignore
+!.gitignore
+.python-version
+.vscode
