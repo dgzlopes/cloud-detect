@@ -14,7 +14,7 @@ setup(
     url='https://github.com/dgzlopes/cloud-detect',
     license='MIT',
     install_requires=[
-        'requests'
+        'requests',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',

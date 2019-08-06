@@ -1,4 +1,5 @@
-from abc import ABCMeta, abstractmethod
+from abc import ABCMeta   # noqa: F401
+from abc import abstractmethod   # noqa: F401
 
 
 class AbstractProvider():

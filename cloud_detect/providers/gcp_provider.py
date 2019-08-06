@@ -1,7 +1,8 @@
 import logging
-import requests
-import json
 from pathlib import Path
+
+import requests
+
 from . import AbstractProvider
 
 
@@ -20,27 +21,28 @@ class GCPProvider(AbstractProvider):
         """
             Tries to identify GCP using all the implemented options
         """
-        self.logger.info("Try to identify GCP")
+        self.logger.info('Try to identify GCP')
         return self.check_metadata_server() or self.check_vendor_file()
 
     def check_metadata_server(self):
         """
             Tries to identify GCP via metadata server
         """
-        self.logger.debug("Checking GCP metadata")
+        self.logger.debug('Checking GCP metadata')
         try:
-            response = requests.get(
+            requests.get(
                 self.metadata_url,
-                headers=self.headers)
+                headers=self.headers,
+            )
             return True
-        except requests.exceptions.RequestException as e:
+        except requests.exceptions.RequestException as e:   # noqa: F841
             return False
 
     def check_vendor_file(self):
         """
             Tries to identify GCP provider by reading the /sys/class/dmi/id/product_name
         """
-        self.logger.debug("Checking GCP vendor file")
+        self.logger.debug('Checking GCP vendor file')
         gcp_path = Path(self.vendor_file)
         if gcp_path.is_file():
             if 'Google' in open(self.vendor_file).read():

@@ -1,14 +1,16 @@
 import logging
-from cloud_detect.providers import AWSProvider, GCPProvider
+
+from cloud_detect.providers import AWSProvider
+from cloud_detect.providers import GCPProvider
 
 
 def provider(excluded=[]):
     if 'aws' not in excluded and AWSProvider().identify():
-        logging.debug("Cloud_detect result is aws")
+        logging.debug('Cloud_detect result is aws')
         return 'aws'
     elif 'gcp' not in excluded and GCPProvider().identify():
-        logging.debug("Cloud_detect result is gcp")
+        logging.debug('Cloud_detect result is gcp')
         return 'gcp'
     else:
-        logging.debug("Cloud_detect result is unknown")
+        logging.debug('Cloud_detect result is unknown')
         return 'unknown'

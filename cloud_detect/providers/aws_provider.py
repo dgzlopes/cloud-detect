@@ -1,7 +1,8 @@
 import logging
-import requests
-import json
 from pathlib import Path
+
+import requests
+
 from . import AbstractProvider
 
 
@@ -19,18 +20,19 @@ class AWSProvider(AbstractProvider):
         """
             Tries to identify AWS using all the implemented options
         """
-        self.logger.info("Try to identify AWS")
+        self.logger.info('Try to identify AWS')
         return self.check_metadata_server() or self.check_vendor_file()
 
     def check_metadata_server(self):
         """
             Tries to identify AWS via metadata server
         """
-        self.logger.debug("Checking AWS metadata")
+        self.logger.debug('Checking AWS metadata')
         try:
             response = requests.get(self.metadata_url).json()
             if response['ImageID'].startswith(
-                    'ami-') and response['InstanceID'].startswith('i-'):
+                    'ami-',
+            ) and response['InstanceID'].startswith('i-'):
                 return True
             return False
         except BaseException:
@@ -40,7 +42,7 @@ class AWSProvider(AbstractProvider):
         """
             Tries to identify AWS provider by reading the /sys/class/dmi/id/product_version
         """
-        self.logger.debug("Checking AWS vendor file")
+        self.logger.debug('Checking AWS vendor file')
         aws_path = Path(self.vendor_file)
         if aws_path.is_file():
             if 'amazon' in open(self.vendor_file).read():

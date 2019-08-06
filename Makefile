@@ -14,7 +14,7 @@ publish:
 	python3 setup.py sdist bdist_wheel
 	twine upload dist/*
 	rm -fr build dist .egg cloud_detect.egg-info
-	
+
 .PHONY: super-clean
 super-clean: clean
 	rm -rf .tox
