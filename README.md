@@ -35,6 +35,6 @@ pip install cloud-detect
 4. Send a [pull request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) and bug [me](https://github.com/dgzlopes) until it gets merged and published.
 
 Some things that would be great to have:
-- More cloud providers
+- Add cloud providers (Azure, Digital Ocean, Vultr)
 - Add codecov
 - Add automated testing and releases with CircleCI.
