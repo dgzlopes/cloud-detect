@@ -7,7 +7,7 @@ with open('README.md') as f:
 
 setup(
     name='cloud-detect',
-    version='0.0.2',
+    version='0.0.3',
     description="Module that determines a host's cloud provider",
     long_description=long_description,
     long_description_content_type='text/markdown',
