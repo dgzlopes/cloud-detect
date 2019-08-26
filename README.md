@@ -8,7 +8,7 @@
 `cloud-detect` is a Python module that determines a host's cloud provider. Highly inspired by the Go based [Satellite](https://github.com/banzaicloud/satellite), `cloud-detect` uses the same techniques (file systems and provider metadata) to properly identify cloud providers.
 
 ## Features
-- Supports identification of AWS, GCP and Digital Ocean hosts.
+- Supports identification of AWS, GCP, Azure and Digital Ocean hosts.
 - Supports skipping providers identification.
 - Logging integration.
 - Small and extensible.
@@ -22,12 +22,16 @@
 >>> provider(excluded='aws')
 'unknown'
 ```
-> Right now the only possible responses are: 'aws', 'gcp', 'do' or 'unknown'
+> Right now the only possible responses are: 'aws', 'gcp', 'do', 'azure' or 'unknown'
 ## Installation
 Via pip:
 ```
 pip install cloud-detect
 ```
+
+## Examples
+[Termination-handler](https://github.com/dgzlopes/termination-handler) uses cloud-detect to keep the handling of termination notices on spot/preemptible instances cloud-agnostic, making easier to operate the same tooling in various distinct environments.
+
 ## How to contribute
 1. Check for open issues or open a fresh issue to start a discussion around a feature idea or a bug.
 2. Fork [the repository](https://github.com/dgzlopes/cloud-detect) on GitHub to start making your changes to the master branch (or branch off of it).
@@ -35,5 +39,5 @@ pip install cloud-detect
 4. Send a [pull request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) and bug [me](https://github.com/dgzlopes) until it gets merged and published.
 
 Some things that would be great to have:
-- Add cloud providers (Azure, Vultr)
+- Add cloud providers (Vultr, Oracle)
 - Add codecov

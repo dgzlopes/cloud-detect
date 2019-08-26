@@ -7,14 +7,14 @@ with open('README.md') as f:
 
 setup(
     name='cloud-detect',
-    version='0.0.3',
+    version='0.0.4',
     description="Module that determines a host's cloud provider",
     long_description=long_description,
     long_description_content_type='text/markdown',
     url='https://github.com/dgzlopes/cloud-detect',
     license='MIT',
     install_requires=[
-        'requests',
+        'requests>=2.21.0,<3',
     ],
     classifiers=[
         'Development Status :: 3 - Alpha',
