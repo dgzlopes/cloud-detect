@@ -1,8 +1,10 @@
+from os import path
+
 from distutils.core import setup
 
 import setuptools
 
-with open('README.md') as f:
+with open(path.join(__file__,'README.md')) as f:
     long_description = f.read()
 
 setup(
