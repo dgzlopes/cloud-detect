@@ -4,8 +4,11 @@ from distutils.core import setup
 
 import setuptools
 
-with open(path.join(getcwd(),'README.md')) as f:
-    long_description = f.read()
+try:
+    with open('README.md') as f:
+        long_description = f.read()
+except FileNotFoundError:
+    pass
 
 setup(
     name='cloud-detect',
