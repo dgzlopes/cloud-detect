@@ -24,7 +24,7 @@ def test_valid_metadata_server_check():
     mocking_url = 'http://testing_metadata_url.com'
     responses.add(
         responses.GET, 'http://testing_metadata_url.com',
-        content='Alibaba Cloud ECS',
+        body='Alibaba Cloud ECS',
     )
 
     provider = AlibabaProvider()
@@ -37,7 +37,7 @@ def test_invalid_metadata_server_check():
     mocking_url = 'http://testing_metadata_url.com'
     responses.add(
         responses.GET, 'http://testing_metadata_url.com',
-        content='',
+        body='',
     )
 
     provider = AlibabaProvider()
