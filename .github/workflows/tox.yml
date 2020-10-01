@@ -25,6 +25,6 @@ jobs:
           python -m pip install --upgrade pip
           pip install tox tox-gh-actions
       - name: Install Make
-        run: sudo apt install build-essentials
+        run: sudo apt install build-essential
       - name: Run Tests with Tox
         run: make test
