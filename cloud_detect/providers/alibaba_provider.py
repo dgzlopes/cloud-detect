@@ -20,7 +20,7 @@ class AlibabaProvider(AbstractProvider):
         """
             Tries to identify Alibaba using all the implemented options
         """
-        self.logger.info('Try to identify AWS')
+        self.logger.info('Try to identify Alibaba')
         return self.check_metadata_server() or self.check_vendor_file()
 
     def check_metadata_server(self):
