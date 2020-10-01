@@ -1,4 +1,4 @@
-name: tox
+name: Testing for Python Versions 3.5-3.8 via tox
 on:
   push:
    branches:
