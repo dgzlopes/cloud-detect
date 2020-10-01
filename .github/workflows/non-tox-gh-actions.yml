@@ -11,8 +11,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
-        python-version: ['3.5']
+        python-version: ['3.4', '3.5']
     name: Python ${{ matrix.python-version }}
     steps:
       - uses: actions/checkout@v2
@@ -26,7 +27,11 @@ jobs:
           pip install tox
       - name: Install Make
         run: sudo apt install build-essential
-      - name: Run Tests with Tox
+      - name: Run Tests for Python 3.5
         env:
           TOXENV: py35
         run: make test
+      - name: Run Tests for Python 3.4
+        env:
+          TOXENV: py34
+        run: make test        
