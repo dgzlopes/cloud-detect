@@ -1,5 +1,5 @@
 pre-commit==1.11.2
 pytest
-tox
+tox>=3.8
 tox-pip-extensions
 responses
