@@ -29,7 +29,7 @@ class AlibabaProvider(AbstractProvider):
         """
         self.logger.debug('Checking Alibaba metadata')
         try:
-            response = requests.get(self.metadata_url).json()
+            response = requests.get(self.metadata_url)
             if response.content == 'ECS Virt':
                 return True
             return False
