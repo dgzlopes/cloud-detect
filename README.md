@@ -8,7 +8,7 @@
 `cloud-detect` is a Python module that determines a host's cloud provider. Highly inspired by the Go based [Satellite](https://github.com/banzaicloud/satellite), `cloud-detect` uses the same techniques (file systems and provider metadata) to properly identify cloud providers.
 
 ## Features
-- Supports identification of AWS, GCP, Azure and Digital Ocean hosts.
+- Supports identification of Alibaba, AWS, GCP, Azure and Digital Ocean hosts.
 - Supports skipping providers identification.
 - Logging integration.
 - Small and extensible.
@@ -22,7 +22,7 @@
 >>> provider(excluded='aws')
 'unknown'
 ```
-> Right now the only possible responses are: 'aws', 'gcp', 'do', 'azure' or 'unknown'
+> Right now the only possible responses are: 'alibaba' 'aws', 'gcp', 'do', 'azure' or 'unknown'
 ## Installation
 Via pip:
 ```
