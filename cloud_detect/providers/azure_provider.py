@@ -30,11 +30,11 @@ class AzureProvider(AbstractProvider):
         """
         self.logger.debug('Checking Azure metadata')
         try:
-            requests.get(
+            response = requests.get(
                 self.metadata_url,
                 headers=self.headers,
             )
-            return True
+            return response.status_code == 200
         except BaseException:
             return False
 

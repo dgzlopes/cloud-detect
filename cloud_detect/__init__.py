@@ -4,6 +4,7 @@ from cloud_detect.providers import AWSProvider
 from cloud_detect.providers import AzureProvider
 from cloud_detect.providers import DOProvider
 from cloud_detect.providers import GCPProvider
+from cloud_detect.providers import OCIProvider
 
 
 def provider(excluded=[]):
@@ -19,6 +20,9 @@ def provider(excluded=[]):
     elif 'azure' not in excluded and AzureProvider().identify():
         logging.debug('Cloud_detect result is azure')
         return 'azure'
+    elif 'oci' not in excluded and OCIProvider().identify():
+        logging.debug('Cloud_detect result is oci')
+        return 'oci'
     else:
         logging.debug('Cloud_detect result is unknown')
         return 'unknown'
