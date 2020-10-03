@@ -22,7 +22,7 @@
 >>> provider(excluded='aws')
 'unknown'
 ```
-> Right now the only possible responses are: 'aws', 'gcp', 'do', 'azure' or 'unknown'
+> Right now the only possible responses are: 'aws', 'gcp', 'do', 'azure', 'oci' or 'unknown'
 ## Installation
 Via pip:
 ```
@@ -39,5 +39,5 @@ pip install cloud-detect
 4. Send a [pull request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) and bug [me](https://github.com/dgzlopes) until it gets merged and published.
 
 Some things that would be great to have:
-- Add cloud providers (Vultr, Oracle)
+- Add cloud providers (Vultr)
 - Add codecov
