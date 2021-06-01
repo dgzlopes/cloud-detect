@@ -2,7 +2,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cloud-detect.svg)](https://pypi.org/project/cloud-detect/)
 [![PyPI](https://img.shields.io/pypi/v/cloud-detect.svg)](https://pypi.org/project/cloud-detect/)
 [![PyPI - License](https://img.shields.io/pypi/l/cloud-detect.svg)](https://github.com/dgzlopes/cloud-detect/blob/master/LICENSE.md)
-[![Build Status](https://travis-ci.org/dgzlopes/cloud-detect.svg?branch=master)](https://travis-ci.org/dgzlopes/cloud-detect)
+[![Build Status](https://github.com/dgzlopes/cloud-detect/workflows/Testing%20for%20Python%20Versions%203.5-3.8%20via%20tox/badge.svg)](https://github.com/dgzlopes/cloud-detect/actions?query=workflow%3A%22Testing+for+Python+Versions+3.5-3.8+via+tox%22)
 
 ## About
 `cloud-detect` is a Python module that determines a host's cloud provider. Highly inspired by the Go based [Satellite](https://github.com/banzaicloud/satellite), `cloud-detect` uses the same techniques (file systems and provider metadata) to properly identify cloud providers.
