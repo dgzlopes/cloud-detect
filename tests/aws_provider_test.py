@@ -24,7 +24,7 @@ def test_valid_metadata_server_check():
     mocking_url = 'http://testing_metadata_url.com'
     responses.add(
         responses.GET, 'http://testing_metadata_url.com',
-        json={'ImageID': 'ami-12312412', 'InstanceID': 'i-ec12as'},
+        json={'imageID': 'ami-12312412', 'instanceID': 'i-ec12as'},
     )
 
     provider = AWSProvider()
@@ -37,7 +37,7 @@ def test_invalid_metadata_server_check():
     mocking_url = 'http://testing_metadata_url.com'
     responses.add(
         responses.GET, 'http://testing_metadata_url.com',
-        json={'ImageID': 'some_ID', 'InstanceID': 'some_Instance'},
+        json={'imageID': 'some_ID', 'instanceID': 'some_Instance'},
     )
 
     provider = AWSProvider()

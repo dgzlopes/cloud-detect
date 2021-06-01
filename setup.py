@@ -1,10 +1,8 @@
-from os import path, getcwd
-
 from distutils.core import setup
 
 import setuptools
 
-long_description = ""
+long_description = ''
 try:
     with open('README.md') as f:
         long_description = f.read()
