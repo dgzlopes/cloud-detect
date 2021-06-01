@@ -30,9 +30,9 @@ class AWSProvider(AbstractProvider):
         self.logger.debug('Checking AWS metadata')
         try:
             response = requests.get(self.metadata_url).json()
-            if response['ImageID'].startswith(
+            if response['imageID'].startswith(
                     'ami-',
-            ) and response['InstanceID'].startswith('i-'):
+            ) and response['instanceID'].startswith('i-'):
                 return True
             return False
         except BaseException:
