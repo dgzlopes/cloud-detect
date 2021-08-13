@@ -9,7 +9,7 @@ from cloud_detect.providers import OCIProvider
 
 
 def provider(excluded=[]):
-    if 'alibaba' not in excluded and AlibabaProvider.identify():
+    if 'alibaba' not in excluded and AlibabaProvider().identify():
         logging.debug('Cloud_detect result is alibaba')
         return 'alibaba'
     elif 'aws' not in excluded and AWSProvider().identify():
