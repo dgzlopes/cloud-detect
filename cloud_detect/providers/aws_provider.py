@@ -32,7 +32,7 @@ class AWSProvider(AbstractProvider):
             response = requests.get(self.metadata_url).json()
             if response['imageID'].startswith(
                     'ami-',
-            ) and response['instanceID'].startswith('i-'):
+            ) and response['instanceId'].startswith('i-'):
                 return True
             return False
         except BaseException:
