@@ -13,7 +13,9 @@ class AzureProvider(AbstractProvider):
 
     def __init__(self, logger=None):
         self.logger = logger or logging.getLogger(__name__)
-        self.metadata_url = 'http://169.254.169.254/metadata/instance?api-version=2017-12-01'
+        self.metadata_url = (
+            'http://169.254.169.254/metadata/instance?api-version=2017-12-01'
+        )
         self.vendor_file = '/sys/class/dmi/id/sys_vendor'
         self.headers = {'Metadata': 'true'}
 
@@ -30,10 +32,7 @@ class AzureProvider(AbstractProvider):
         """
         self.logger.debug('Checking Azure metadata')
         try:
-            response = requests.get(
-                self.metadata_url,
-                headers=self.headers,
-            )
+            response = requests.get(self.metadata_url, headers=self.headers,)
             return response.status_code == 200
         except BaseException:
             return False

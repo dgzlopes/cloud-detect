@@ -13,7 +13,9 @@ class AWSProvider(AbstractProvider):
 
     def __init__(self, logger=None):
         self.logger = logger or logging.getLogger(__name__)
-        self.metadata_url = 'http://169.254.169.254/latest/dynamic/instance-identity/document'
+        self.metadata_url = (
+            'http://169.254.169.254/latest/dynamic/instance-identity/document'
+        )
         self.vendor_file = '/sys/class/dmi/id/product_version'
 
     def identify(self):
@@ -30,9 +32,9 @@ class AWSProvider(AbstractProvider):
         self.logger.debug('Checking AWS metadata')
         try:
             response = requests.get(self.metadata_url).json()
-            if response['imageID'].startswith(
-                    'ami-',
-            ) and response['instanceId'].startswith('i-'):
+            if response['imageID'].startswith('ami-',) and response[
+                'instanceId'
+            ].startswith('i-'):
                 return True
             return False
         except BaseException:

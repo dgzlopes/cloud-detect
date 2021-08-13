@@ -13,7 +13,7 @@ class AlibabaProvider(AbstractProvider):
 
     def __init__(self, logger=None):
         self.logger = logger or logging.getLogger(__name__)
-        self.metadata_url = 'http://100.100.100.200/latest/meta-data/latest/meta-data/instance/virtualization-solution'
+        self.metadata_url = 'http://100.100.100.200/latest/meta-data/latest/meta-data/instance/virtualization-solution'  # noqa
         self.vendor_file = '/sys/class/dmi/id/product_name'
 
     def identify(self):

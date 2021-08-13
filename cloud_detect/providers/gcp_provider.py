@@ -13,7 +13,9 @@ class GCPProvider(AbstractProvider):
 
     def __init__(self, logger=None):
         self.logger = logger or logging.getLogger(__name__)
-        self.metadata_url = 'http://metadata.google.internal/computeMetadata/v1/instance/tags'
+        self.metadata_url = (
+            'http://metadata.google.internal/computeMetadata/v1/instance/tags'
+        )
         self.vendor_file = '/sys/class/dmi/id/product_name'
         self.headers = {'Metadata-Flavor': 'Google'}
 
@@ -31,11 +33,10 @@ class GCPProvider(AbstractProvider):
         self.logger.debug('Checking GCP metadata')
         try:
             requests.get(
-                self.metadata_url,
-                headers=self.headers,
+                self.metadata_url, headers=self.headers,
             )
             return True
-        except requests.exceptions.RequestException as e:   # noqa: F841
+        except requests.exceptions.RequestException as e:  # noqa: F841
             return False
 
     def check_vendor_file(self):

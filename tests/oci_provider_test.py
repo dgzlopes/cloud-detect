@@ -1,5 +1,3 @@
-import pytest
-
 from cloud_detect.providers import OCIProvider
 
 
