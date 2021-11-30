@@ -11,7 +11,7 @@ except FileNotFoundError:
 
 setup(
     name='cloud-detect',
-    version='0.0.6',
+    version='0.0.7',
     description="Module that determines a host's cloud provider",
     long_description=long_description,
     long_description_content_type='text/markdown',
