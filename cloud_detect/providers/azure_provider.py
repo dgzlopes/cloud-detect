@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-import requests
+import aiohttp
 
 from . import AbstractProvider
 
@@ -10,6 +10,7 @@ class AzureProvider(AbstractProvider):
     """
         Concrete implementation of the Azure cloud provider.
     """
+    identifier = 'azure'
 
     def __init__(self, logger=None):
         self.logger = logger or logging.getLogger(__name__)
@@ -19,21 +20,22 @@ class AzureProvider(AbstractProvider):
         self.vendor_file = '/sys/class/dmi/id/sys_vendor'
         self.headers = {'Metadata': 'true'}
 
-    def identify(self):
+    async def identify(self):
         """
             Tries to identify Azure using all the implemented options
         """
         self.logger.info('Try to identify DO')
-        return self.check_metadata_server() or self.check_vendor_file()
+        return self.check_vendor_file() or await self.check_metadata_server()
 
-    def check_metadata_server(self):
+    async def check_metadata_server(self):
         """
             Tries to identify Azure via metadata server
         """
         self.logger.debug('Checking Azure metadata')
         try:
-            response = requests.get(self.metadata_url, headers=self.headers,)
-            return response.status_code == 200
+            async with aiohttp.ClientSession() as session:
+                async with session.get(self.metadata_url, headers=self.headers) as response:
+                    return response.status == 200
         except BaseException:
             return False
 

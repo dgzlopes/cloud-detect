@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-import requests
+import aiohttp
 
 from . import AbstractProvider
 
@@ -10,6 +10,7 @@ class GCPProvider(AbstractProvider):
     """
         Concrete implementation of the GCP cloud provider.
     """
+    identifier = 'gcp'
 
     def __init__(self, logger=None):
         self.logger = logger or logging.getLogger(__name__)
@@ -19,24 +20,23 @@ class GCPProvider(AbstractProvider):
         self.vendor_file = '/sys/class/dmi/id/product_name'
         self.headers = {'Metadata-Flavor': 'Google'}
 
-    def identify(self):
+    async def identify(self):
         """
             Tries to identify GCP using all the implemented options
         """
         self.logger.info('Try to identify GCP')
-        return self.check_metadata_server() or self.check_vendor_file()
+        return self.check_vendor_file() or await self.check_metadata_server()
 
-    def check_metadata_server(self):
+    async def check_metadata_server(self):
         """
             Tries to identify GCP via metadata server
         """
         self.logger.debug('Checking GCP metadata')
         try:
-            requests.get(
-                self.metadata_url, headers=self.headers,
-            )
-            return True
-        except requests.exceptions.RequestException as e:  # noqa: F841
+            async with aiohttp.ClientSession() as session:
+                async with session.get(self.metadata_url):
+                    return True
+        except aiohttp.ClientError as e:  # noqa: F841
             return False
 
     def check_vendor_file(self):
