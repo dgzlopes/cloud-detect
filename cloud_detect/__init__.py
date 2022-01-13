@@ -19,19 +19,21 @@ TIMEOUT = 5  # seconds
 
 
 async def _identify(timeout):
+
+    async def wrapper(prov):
+        try:
+            return await prov().identify()
+        except asyncio.CancelledError:
+            pass
+
     tasks = {
-        prov.identifier: asyncio.ensure_future(
-            prov().identify(),
-        ) for prov in __PROVIDER_CLASSES
+        prov.identifier: asyncio.ensure_future(wrapper(prov)) for prov in __PROVIDER_CLASSES
     }
 
     async def cancel_unfinished_tasks():
         for t in tasks.values():
             if not t.done():
-                try:
-                    t.cancel()
-                except asyncio.CancelledError:
-                    pass
+                t.cancel()
         # This statement ensures
         # "Task was destroyed but it is pending!" warning is not raised
         await asyncio.gather(*tasks.values())
