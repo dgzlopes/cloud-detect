@@ -1,7 +1,7 @@
 import asyncio
 import logging
 import time
-from sys import version_info
+from sys import version_info as py_version
 
 from cloud_detect.providers import AlibabaProvider
 from cloud_detect.providers import AWSProvider
@@ -44,7 +44,7 @@ async def _identify(timeout):
                 del tasks[prov]
                 if t.result():
                     await cancel_unfinished_tasks()
-                    logging.debug('Cloud_detect result is %s' % prov)
+                    logging.debug(f'Cloud_detect result is {prov}')
                     return prov
         else:
             await asyncio.sleep(0.1)
@@ -58,7 +58,7 @@ async def _identify(timeout):
 
 
 def provider(timeout=TIMEOUT):
-    if version_info.minor >= 7:
+    if py_version.minor >= 7:
         result = asyncio.run(_identify(timeout))
     else:
         loop = asyncio.new_event_loop()

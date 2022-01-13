@@ -1,6 +1,6 @@
 import setuptools
-import sys
 from distutils.core import setup
+from sys import version_info as py_version
 
 long_description = ''
 try:
@@ -9,13 +9,10 @@ try:
 except FileNotFoundError:
     pass
 
-minor_version = sys.version_info.minor
-if minor_version >= 7:
+if py_version.minor >= 7:
     install_requires = ['aiohttp>=3.7']
-elif minor_version == 6:
-    install_requires = ['aiohttp>=3.7,<4']
 else:
-    install_requires = ['aiohttp>=3.5,<3.7']
+    install_requires = ['aiohttp>=3.7,<4']
 
 setup(
     name='cloud-detect',
@@ -30,7 +27,6 @@ setup(
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
@@ -41,7 +37,7 @@ setup(
         'Topic :: System :: Systems Administration',
         'Topic :: System :: Networking',
     ],
-    python_requires='>=3.5',
+    python_requires='>=3.6',
     author='Daniel Gonzalez Lopes',
     author_email='danielgonzalezlopes@gmail.com',
     packages=setuptools.find_packages(),
