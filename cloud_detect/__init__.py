@@ -15,10 +15,11 @@ __PROVIDER_CLASSES = [
     DOProvider, GCPProvider, OCIProvider,
 ]
 
-TIMEOUT = 5  # seconds
-
 
 async def _identify(timeout):
+
+    assert timeout is None or (isinstance(timeout, (int, float)) and timeout > 0.1), \
+        f'`timeout` should be a number and > 0.1, provided value: {timeout}'
 
     async def wrapper(prov):
         try:
@@ -38,8 +39,13 @@ async def _identify(timeout):
         # "Task was destroyed but it is pending!" warning is not raised
         await asyncio.gather(*tasks.values())
 
-    stoptime = time.time() + timeout
-    while tasks and time.time() < stoptime:
+    if timeout is None:
+        def time_ok(): return True
+    else:
+        stoptime = time.time() + timeout
+        def time_ok(): return time.time() < stoptime
+
+    while tasks and time_ok():
         for prov in list(tasks):
             t = tasks[prov]
             if t.done():
@@ -54,12 +60,33 @@ async def _identify(timeout):
 
     if tasks:
         await cancel_unfinished_tasks()
-        return 'timeout'
-    else:
-        return 'unknown'
+
+    return 'unknown'
 
 
-def provider(timeout=TIMEOUT):
+def provider(timeout=None):
+    """
+        Identify the host's cloud provider
+
+        :param: timeout(optional) Maximum time(seconds) allowed for detection.
+            On timeout, 'unknown' is returned.
+            When the host is one of the SUPPORTED_PROVIDERS,
+            the correct cloud provider is deteced, usually, within a second or two.
+            When the host is your local or a non-supported provider,
+            it may take more than a minute to return 'unknown'.
+            Such a long wait time may not be desirable in certain use cases and
+            `timeout` can be used to reduce it.
+        :return: :str: 'unknown' or one of the SUPPORTED_PROVIDERS
+
+        If you want the async counterpart of this function, use `async_provider`.
+
+        Usage::
+        >>> from cloud_detect import provider, SUPPORTED_PROVIDERS
+        >>> SUPPORTED_PROVIDERS
+        ('aws', 'azure', 'gcp')
+        >>> provider()
+        'aws'
+    """
     if py_version.minor >= 7:
         result = asyncio.run(_identify(timeout))
     else:
@@ -69,7 +96,17 @@ def provider(timeout=TIMEOUT):
     return result
 
 
-async def async_provider(timeout=TIMEOUT):
+async def async_provider(timeout=None):
+    """
+        The async counterpart of `provider`.
+        Use this api when calling from async code.
+        Usage::
+        >>> from cloud_detect import async_provider
+        >>> async def my_async_func():
+                ....
+                cloud = await async_provider()
+                ....
+    """
     return await _identify(timeout)
 
 

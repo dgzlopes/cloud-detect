@@ -72,6 +72,23 @@ async def test_identify(monkeypatch):
 
 
 @pytest.mark.asyncio
+async def test_identify_assertion_error():
+    timeout = 0.01
+    with pytest.raises(
+        AssertionError,
+        match=f'`timeout` should be a number and > 0.1, provided value: {timeout}',
+    ):
+        await cloud_detect._identify(timeout)
+
+    timeout = '0'
+    with pytest.raises(
+        AssertionError,
+        match=f'`timeout` should be a number and > 0.1, provided value: {timeout}',
+    ):
+        await cloud_detect._identify(timeout)
+
+
+@pytest.mark.asyncio
 async def test_identify_timeout(monkeypatch):
     mock_pcs = []
     for args in [('c1', False, False, 1), ('c2', False, False, 3)]:
@@ -79,7 +96,7 @@ async def test_identify_timeout(monkeypatch):
 
     monkeypatch.setattr(cloud_detect, '__PROVIDER_CLASSES', mock_pcs)
 
-    assert await cloud_detect._identify(0.5) == 'timeout'
+    assert await cloud_detect._identify(0.5) == 'unknown'
 
 
 @pytest.mark.asyncio
