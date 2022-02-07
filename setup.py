@@ -1,6 +1,7 @@
-import setuptools
 from distutils.core import setup
 from sys import version_info as py_version
+
+import setuptools
 
 long_description = ''
 try:
