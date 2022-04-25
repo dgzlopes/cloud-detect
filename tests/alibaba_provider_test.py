@@ -1,6 +1,4 @@
 import pytest   # noqa: F401
-import requests   # noqa: F401
-import responses
 
 from cloud_detect.providers import AlibabaProvider
 
@@ -19,27 +17,24 @@ def test_reading_invalid_vendor_file():
     assert provider.check_vendor_file() is False
 
 
-@responses.activate
-def test_valid_metadata_server_check():
-    mocking_url = 'http://testing_metadata_url.com'
-    responses.add(
-        responses.GET, 'http://testing_metadata_url.com',
-        body='ECS Virt',
+@pytest.mark.asyncio
+async def test_valid_metadata_server_check(aresponses):
+    mock_host = 'testing_metadata_url.com'
+    aresponses.add(
+        mock_host, '/', 'GET',
+        aresponses.Response(text='ECS Virt', status=200),
     )
-
     provider = AlibabaProvider()
-    provider.metadata_url = mocking_url
-    assert provider.check_metadata_server() is True
+    provider.metadata_url = f'https://{mock_host}'
+    assert await provider.check_metadata_server() is True
+
+    aresponses.assert_plan_strictly_followed()
 
 
-@responses.activate
-def test_invalid_metadata_server_check():
-    mocking_url = 'http://testing_metadata_url.com'
-    responses.add(
-        responses.GET, 'http://testing_metadata_url.com',
-        body='',
-    )
-
+@pytest.mark.asyncio
+async def test_invalid_metadata_server_check(aresponses):
+    mock_host = 'testing_metadata_url.com'
+    aresponses.add(mock_host, '/', 'GET', aresponses.Response(text=''))
     provider = AlibabaProvider()
-    provider.metadata_url = mocking_url
-    assert provider.check_metadata_server() is False
+    provider.metadata_url = f'https://{mock_host}'
+    assert await provider.check_metadata_server() is False

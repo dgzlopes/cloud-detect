@@ -1,4 +1,5 @@
 from distutils.core import setup
+from sys import version_info as py_version
 
 import setuptools
 
@@ -9,6 +10,11 @@ try:
 except FileNotFoundError:
     pass
 
+if py_version.minor >= 7:
+    install_requires = ['aiohttp>=3.7']
+else:
+    install_requires = ['aiohttp>=3.7,<4']
+
 setup(
     name='cloud-detect',
     version='0.0.7',
@@ -17,24 +23,22 @@ setup(
     long_description_content_type='text/markdown',
     url='https://github.com/dgzlopes/cloud-detect',
     license='MIT',
-    install_requires=[
-        'requests>=2.21.0,<3',
-    ],
+    install_requires=install_requires,
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Developers',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.4',
-        'Programming Language :: Python :: 3.5',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
+        'Programming Language :: Python :: 3.8',
+        'Programming Language :: Python :: 3.9',
         'License :: OSI Approved :: MIT License',
         'Operating System :: POSIX :: Linux',
         'Topic :: Software Development :: Libraries :: Python Modules',
         'Topic :: System :: Systems Administration',
         'Topic :: System :: Networking',
     ],
-    python_requires='>=3.4',
+    python_requires='>=3.6',
     author='Daniel Gonzalez Lopes',
     author_email='danielgonzalezlopes@gmail.com',
     packages=setuptools.find_packages(),

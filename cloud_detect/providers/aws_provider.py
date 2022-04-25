@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-import requests
+import aiohttp
 
 from . import AbstractProvider
 
@@ -10,6 +10,7 @@ class AWSProvider(AbstractProvider):
     """
         Concrete implementation of the AWS cloud provider.
     """
+    identifier = 'aws'
 
     def __init__(self, logger=None):
         self.logger = logger or logging.getLogger(__name__)
@@ -18,24 +19,26 @@ class AWSProvider(AbstractProvider):
         )
         self.vendor_file = '/sys/class/dmi/id/product_version'
 
-    def identify(self):
+    async def identify(self):
         """
             Tries to identify AWS using all the implemented options
         """
         self.logger.info('Try to identify AWS')
-        return self.check_metadata_server() or self.check_vendor_file()
+        return self.check_vendor_file() or await self.check_metadata_server()
 
-    def check_metadata_server(self):
+    async def check_metadata_server(self):
         """
             Tries to identify AWS via metadata server
         """
         self.logger.debug('Checking AWS metadata')
         try:
-            response = requests.get(self.metadata_url).json()
-            if response['imageId'].startswith('ami-',) and response[
-                'instanceId'
-            ].startswith('i-'):
-                return True
+            async with aiohttp.ClientSession() as session:
+                async with session.get(self.metadata_url) as response:
+                    response = await response.json()
+                    if response['imageId'].startswith('ami-',) and response[
+                        'instanceId'
+                    ].startswith('i-'):
+                        return True
             return False
         except BaseException:
             return False

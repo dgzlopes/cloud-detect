@@ -1,19 +1,20 @@
-from abc import ABCMeta  # noqa: F401
-from abc import abstractmethod  # noqa: F401
+from abc import ABC
+from abc import abstractmethod
 
 
-class AbstractProvider:
+class AbstractProvider(ABC):
     """
         Abstract class representing a cloud provider.
         All concrete cloud providers should implement this.
     """
+    identifier = 'unknown'
 
     @abstractmethod
-    def identify(self):
+    async def identify(self):
         pass  # pragma: no cover
 
     @abstractmethod
-    def check_metadata_server(self):
+    async def check_metadata_server(self):
         pass  # pragma: no cover
 
     @abstractmethod

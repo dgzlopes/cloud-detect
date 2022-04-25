@@ -2,14 +2,14 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cloud-detect.svg)](https://pypi.org/project/cloud-detect/)
 [![PyPI](https://img.shields.io/pypi/v/cloud-detect.svg)](https://pypi.org/project/cloud-detect/)
 [![PyPI - License](https://img.shields.io/pypi/l/cloud-detect.svg)](https://github.com/dgzlopes/cloud-detect/blob/master/LICENSE.md)
-[![Build Status](https://github.com/dgzlopes/cloud-detect/workflows/Testing%20for%20Python%20Versions%203.5-3.8%20via%20tox/badge.svg)](https://github.com/dgzlopes/cloud-detect/actions?query=workflow%3A%22Testing+for+Python+Versions+3.5-3.8+via+tox%22)
+[![Build Status](https://github.com/dgzlopes/cloud-detect/workflows/Testing%20for%20Python%20Versions%203.6-3.9%20via%20tox/badge.svg)](https://github.com/dgzlopes/cloud-detect/actions?query=workflow%3A%22Testing+for+Python+Versions+3.6-3.9+via+tox%22)
 
 ## About
 `cloud-detect` is a Python module that determines a host's cloud provider. Highly inspired by the Go based [Satellite](https://github.com/banzaicloud/satellite), `cloud-detect` uses the same techniques (file systems and provider metadata) to properly identify cloud providers.
 
 ## Features
-- Supports identification of Alibaba, AWS, GCP, Azure and Digital Ocean hosts.
-- Supports skipping providers identification.
+- Supports identification of Alibaba, AWS, Azure, Digital Ocean, GCP and Oracle Cloud hosts.
+- Fast and supports asyncio
 - Logging integration.
 - Small and extensible.
 
@@ -19,11 +19,15 @@
 >>> from cloud_detect import provider
 >>> provider()
 'aws'
->>> provider(excluded='aws')
+
+>>> provider() # when tested in local/non-supported cloud env
 'unknown'
 ```
 
-> Right now the only possible responses are: 'alibaba', 'aws', 'gcp', 'do', 'azure', 'oci' or 'unknown'
+> Right now the only possible responses are: 'alibaba', 'aws', 'azure', 'do', 'gcp', 'oci' or 'unknown'
+
+> You can get the list of supported providers using
+>>`>>> from cloud_detect import SUPPORTED_PROVIDERS`
 
 ## Installation
 Via pip:
