@@ -1,7 +1,7 @@
-from distutils.core import setup
 from sys import version_info as py_version
 
 import setuptools
+from distutils.core import setup
 
 long_description = ''
 try:
@@ -17,7 +17,7 @@ else:
 
 setup(
     name='cloud-detect',
-    version='0.0.7',
+    version='0.0.8',
     description="Module that determines a host's cloud provider",
     long_description=long_description,
     long_description_content_type='text/markdown',
