@@ -50,6 +50,6 @@ class AWSProvider(AbstractProvider):
         self.logger.debug('Checking AWS vendor file')
         aws_path = Path(self.vendor_file)
         if aws_path.is_file():
-            if 'amazon' in open(self.vendor_file).read():
+            if 'amazon' in aws_path.read_text():
                 return True
         return False

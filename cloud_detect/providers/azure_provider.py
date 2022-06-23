@@ -46,6 +46,6 @@ class AzureProvider(AbstractProvider):
         self.logger.debug('Checking Azure vendor file')
         do_path = Path(self.vendor_file)
         if do_path.is_file():
-            if 'Microsoft Corporation' in open(self.vendor_file).read():
+            if 'Microsoft Corporation' in do_path.read_text():
                 return True
         return False
