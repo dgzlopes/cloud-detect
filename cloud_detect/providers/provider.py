@@ -18,5 +18,5 @@ class AbstractProvider(ABC):
         pass  # pragma: no cover
 
     @abstractmethod
-    def check_vendor_file(self):
+    def check_vendor_file(self, vendor_file):
         pass  # pragma: no cover

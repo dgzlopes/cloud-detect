@@ -19,17 +19,17 @@ class OCIProvider(AbstractProvider):
             Tries to identify OCI using all the implemented options
         """
         self.logger.info('Try to identify OCI')
-        return self.check_vendor_file()
+        return self.check_vendor_file(self.vendor_file)
 
     def check_metadata_server(self):
         raise NotImplementedError
 
-    def check_vendor_file(self):
+    def check_vendor_file(self, vendor_file):
         """
             Tries to identify OCI provider by reading the file -> /sys/class/dmi/id/chassis_asset_tag # noqa
         """
         self.logger.debug('Checking OCI vendor file')
-        oci_path = Path(self.vendor_file)
+        oci_path = Path(vendor_file)
         if oci_path.is_file():
             if 'OracleCloud' in oci_path.read_text():
                 return True

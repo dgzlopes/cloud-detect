@@ -25,7 +25,7 @@ class AzureProvider(AbstractProvider):
             Tries to identify Azure using all the implemented options
         """
         self.logger.info('Try to identify DO')
-        return self.check_vendor_file() or await self.check_metadata_server()
+        return self.check_vendor_file(self.vendor_file) or await self.check_metadata_server()
 
     async def check_metadata_server(self):
         """
@@ -39,12 +39,12 @@ class AzureProvider(AbstractProvider):
         except BaseException:
             return False
 
-    def check_vendor_file(self):
+    def check_vendor_file(self, vendor_file):
         """
             Tries to identify Azure provider by reading the /sys/class/dmi/id/sys_vendor
         """
         self.logger.debug('Checking Azure vendor file')
-        ms_path = Path(self.vendor_file)
+        ms_path = Path(vendor_file)
         if ms_path.is_file():
             if 'Microsoft Corporation' in ms_path.read_text():
                 return True
