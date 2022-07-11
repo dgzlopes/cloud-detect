@@ -34,8 +34,8 @@ class AWSProvider(AbstractProvider):
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.metadata_url) as response:
-                    response = await response.json()
-                    if response['imageId'].startswith('ami-',) and response[
+                    response = await response.json(content_type=None)
+                    if response['imageId'].startswith('ami-') and response[
                         'instanceId'
                     ].startswith('i-'):
                         return True
