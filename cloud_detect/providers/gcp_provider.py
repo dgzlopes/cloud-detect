@@ -46,6 +46,6 @@ class GCPProvider(AbstractProvider):
         self.logger.debug('Checking GCP vendor file')
         gcp_path = Path(self.vendor_file)
         if gcp_path.is_file():
-            if 'Google' in open(self.vendor_file).read():
+            if 'Google' in gcp_path.read_text():
                 return True
         return False

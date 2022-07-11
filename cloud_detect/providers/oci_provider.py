@@ -31,6 +31,6 @@ class OCIProvider(AbstractProvider):
         self.logger.debug('Checking OCI vendor file')
         oci_path = Path(self.vendor_file)
         if oci_path.is_file():
-            if 'OracleCloud' in open(self.vendor_file).read():
+            if 'OracleCloud' in oci_path.read_text():
                 return True
         return False

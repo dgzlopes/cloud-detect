@@ -40,9 +40,9 @@ class AlibabaProvider(AbstractProvider):
         """
             Tries to identify Alibaba provider by reading the /sys/class/dmi/id/product_name
         """
-        self.logger.debug('Checking Aliobaba vendor file')
+        self.logger.debug('Checking Alibaba vendor file')
         alibaba_path = Path(self.vendor_file)
         if alibaba_path.is_file():
-            if 'Alibaba Cloud ECS' in open(self.vendor_file).read():
+            if 'Alibaba Cloud ECS' in alibaba_path.read_text():
                 return True
         return False

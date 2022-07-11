@@ -44,8 +44,8 @@ class AzureProvider(AbstractProvider):
             Tries to identify Azure provider by reading the /sys/class/dmi/id/sys_vendor
         """
         self.logger.debug('Checking Azure vendor file')
-        do_path = Path(self.vendor_file)
-        if do_path.is_file():
-            if 'Microsoft Corporation' in open(self.vendor_file).read():
+        ms_path = Path(self.vendor_file)
+        if ms_path.is_file():
+            if 'Microsoft Corporation' in ms_path.read_text():
                 return True
         return False

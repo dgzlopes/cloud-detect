@@ -44,6 +44,6 @@ class DOProvider(AbstractProvider):
         self.logger.debug('Checking DO vendor file')
         do_path = Path(self.vendor_file)
         if do_path.is_file():
-            if 'DigitalOcean' in open(self.vendor_file).read():
+            if 'DigitalOcean' in do_path.read_text():
                 return True
         return False
