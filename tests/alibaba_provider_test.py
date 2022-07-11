@@ -5,16 +5,13 @@ from cloud_detect.providers import AlibabaProvider
 
 def test_reading_correct_vendor_file():
     provider = AlibabaProvider()
-    provider.vendor_file = 'tests/provider_files/alibaba'
-    assert provider.check_vendor_file() is True
+    assert provider.check_vendor_file('tests/provider_files/alibaba') is True
 
 
 def test_reading_invalid_vendor_file():
     provider = AlibabaProvider()
-    provider.vendor_file = 'tests/provider_files/gcp'
-    assert provider.check_vendor_file() is False
-    provider.vendor_file = ''
-    assert provider.check_vendor_file() is False
+    assert provider.check_vendor_file('tests/provider_files/gcp') is False
+    assert provider.check_vendor_file('') is False
 
 
 @pytest.mark.asyncio

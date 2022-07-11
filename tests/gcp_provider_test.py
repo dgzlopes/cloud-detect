@@ -5,16 +5,13 @@ from cloud_detect.providers import GCPProvider
 
 def test_reading_correct_vendor_file():
     provider = GCPProvider()
-    provider.vendor_file = 'tests/provider_files/gcp'
-    assert provider.check_vendor_file() is True
+    assert provider.check_vendor_file('tests/provider_files/gcp') is True
 
 
 def test_reading_invalid_vendor_file():
     provider = GCPProvider()
-    provider.vendor_file = 'tests/provider_files/aws'
-    assert provider.check_vendor_file() is False
-    provider.vendor_file = ''
-    assert provider.check_vendor_file() is False
+    assert provider.check_vendor_file('tests/provider_files/aws') is False
+    assert provider.check_vendor_file('') is False
 
 
 @pytest.mark.asyncio
