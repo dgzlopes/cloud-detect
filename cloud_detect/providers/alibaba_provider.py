@@ -22,7 +22,7 @@ class AlibabaProvider(AbstractProvider):
             Tries to identify Alibaba using all the implemented options
         """
         self.logger.info('Try to identify Alibaba')
-        return self.check_vendor_file(self.vendor_file) or await self.check_metadata_server()
+        return self.check_vendor_file() or await self.check_metadata_server()
 
     async def check_metadata_server(self):
         """
@@ -36,12 +36,12 @@ class AlibabaProvider(AbstractProvider):
         except BaseException:
             return False
 
-    def check_vendor_file(self, vendor_file):
+    def check_vendor_file(self):
         """
             Tries to identify Alibaba provider by reading the /sys/class/dmi/id/product_name
         """
         self.logger.debug('Checking Alibaba vendor file')
-        alibaba_path = Path(vendor_file)
+        alibaba_path = Path(self.vendor_file)
         if alibaba_path.is_file():
             if 'Alibaba Cloud ECS' in alibaba_path.read_text():
                 return True

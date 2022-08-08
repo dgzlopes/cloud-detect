@@ -25,7 +25,7 @@ class GCPProvider(AbstractProvider):
             Tries to identify GCP using all the implemented options
         """
         self.logger.info('Try to identify GCP')
-        return self.check_vendor_file(self.vendor_file) or await self.check_metadata_server()
+        return self.check_vendor_file() or await self.check_metadata_server()
 
     async def check_metadata_server(self):
         """
@@ -39,12 +39,12 @@ class GCPProvider(AbstractProvider):
         except aiohttp.ClientError as e:  # noqa: F841
             return False
 
-    def check_vendor_file(self, vendor_file):
+    def check_vendor_file(self):
         """
             Tries to identify GCP provider by reading the /sys/class/dmi/id/product_name
         """
         self.logger.debug('Checking GCP vendor file')
-        gcp_path = Path(vendor_file)
+        gcp_path = Path(self.vendor_file)
         if gcp_path.is_file():
             if 'Google' in gcp_path.read_text():
                 return True

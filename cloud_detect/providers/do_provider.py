@@ -22,7 +22,7 @@ class DOProvider(AbstractProvider):
             Tries to identify DO using all the implemented options
         """
         self.logger.info('Try to identify DO')
-        return self.check_vendor_file(self.vendor_file) or await self.check_metadata_server()
+        return self.check_vendor_file() or await self.check_metadata_server()
 
     async def check_metadata_server(self):
         """
@@ -37,12 +37,12 @@ class DOProvider(AbstractProvider):
         except BaseException:
             return False
 
-    def check_vendor_file(self, vendor_file):
+    def check_vendor_file(self):
         """
             Tries to identify DO provider by reading the /sys/class/dmi/id/sys_vendor
         """
         self.logger.debug('Checking DO vendor file')
-        do_path = Path(vendor_file)
+        do_path = Path(self.vendor_file)
         if do_path.is_file():
             if 'DigitalOcean' in do_path.read_text():
                 return True

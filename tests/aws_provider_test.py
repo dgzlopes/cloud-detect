@@ -3,16 +3,24 @@ import pytest   # noqa: F401
 from cloud_detect.providers import AWSProvider
 
 
-def test_reading_correct_vendor_file():
+def test_reading_correct_vendor_file_product_version():
     provider = AWSProvider()
-    assert provider.check_vendor_file('tests/provider_files/aws') is True
-    assert provider.check_vendor_file('tests/provider_files/aws2') is True
+    provider.vendor_files = ('tests/provider_files/aws_product_version',)
+    assert provider.check_vendor_file() is True
+
+
+def test_reading_correct_vendor_file_bios_vendor():
+    provider = AWSProvider()
+    provider.vendor_files = ('tests/provider_files/aws_bios_vendor',)
+    assert provider.check_vendor_file() is True
 
 
 def test_reading_invalid_vendor_file():
     provider = AWSProvider()
-    assert provider.check_vendor_file('tests/provider_files/gcp') is False
-    assert provider.check_vendor_file('') is False
+    provider.vendor_file = 'tests/provider_files/gcp'
+    assert provider.check_vendor_file() is False
+    provider.vendor_file = ''
+    assert provider.check_vendor_file() is False
 
 
 @pytest.mark.asyncio
