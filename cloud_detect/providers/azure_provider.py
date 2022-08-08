@@ -24,8 +24,8 @@ class AzureProvider(AbstractProvider):
         """
             Tries to identify Azure using all the implemented options
         """
-        self.logger.info('Try to identify DO')
         return self.check_vendor_file(self.vendor_file) or await self.check_metadata_server()
+        self.logger.info('Try to identify Azure')
 
     async def check_metadata_server(self):
         """
