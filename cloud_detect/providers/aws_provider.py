@@ -17,7 +17,7 @@ class AWSProvider(AbstractProvider):
         self.metadata_url = (
             'http://169.254.169.254/latest/dynamic/instance-identity/document'
         )
-        self.vendor_file = '/sys/class/dmi/id/product_version'
+        self.vendor_files = ('/sys/class/dmi/id/product_version', '/sys/class/dmi/id/bios_vendor')
 
     async def identify(self):
         """
@@ -34,7 +34,7 @@ class AWSProvider(AbstractProvider):
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.metadata_url) as response:
-                    response = await response.json()
+                    response = await response.json(content_type=None)
                     if response['imageId'].startswith('ami-',) and response[
                         'instanceId'
                     ].startswith('i-'):
@@ -48,8 +48,9 @@ class AWSProvider(AbstractProvider):
             Tries to identify AWS provider by reading the /sys/class/dmi/id/product_version
         """
         self.logger.debug('Checking AWS vendor file')
-        aws_path = Path(self.vendor_file)
-        if aws_path.is_file():
-            if 'amazon' in aws_path.read_text():
-                return True
+        for vendor_file in self.vendor_files:
+            aws_path = Path(vendor_file)
+            if aws_path.is_file():
+                if 'amazon' in aws_path.read_text().lower():
+                    return True
         return False

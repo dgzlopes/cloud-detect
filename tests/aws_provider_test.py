@@ -3,9 +3,15 @@ import pytest   # noqa: F401
 from cloud_detect.providers import AWSProvider
 
 
-def test_reading_correct_vendor_file():
+def test_reading_correct_vendor_file_product_version():
     provider = AWSProvider()
-    provider.vendor_file = 'tests/provider_files/aws'
+    provider.vendor_files = ('tests/provider_files/aws_product_version',)
+    assert provider.check_vendor_file() is True
+
+
+def test_reading_correct_vendor_file_bios_vendor():
+    provider = AWSProvider()
+    provider.vendor_files = ('tests/provider_files/aws_bios_vendor',)
     assert provider.check_vendor_file() is True
 
 
