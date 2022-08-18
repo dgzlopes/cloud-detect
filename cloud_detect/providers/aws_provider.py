@@ -17,7 +17,9 @@ class AWSProvider(AbstractProvider):
         self.metadata_url = (
             'http://169.254.169.254/latest/dynamic/instance-identity/document'
         )
-        self.vendor_files = ('/sys/class/dmi/id/product_version', '/sys/class/dmi/id/bios_vendor')
+        self.vendor_files = (
+            '/sys/class/dmi/id/product_version', '/sys/class/dmi/id/bios_vendor'
+        )
 
     async def identify(self):
         """
