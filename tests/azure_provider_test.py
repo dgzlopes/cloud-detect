@@ -18,6 +18,17 @@ def test_reading_invalid_vendor_file():
 
 
 @pytest.mark.asyncio
+async def test_valid_metadata_server_check(aresponses):
+    mock_host = 'testing_metadata_url.com'
+    aresponses.add(
+        mock_host, '/', 'GET', response={ "compute": { "vmId": "2d907167-1eed-4ede-a75e-5ef04603b90d" }},
+    )
+
+    provider = AzureProvider()
+    provider.metadata_url = f'https://{mock_host}'
+    assert await provider.check_metadata_server() is True
+
+@pytest.mark.asyncio
 async def test_invalid_metadata_server_check(aresponses):
     mock_host = 'testing_metadata_url.com'
     aresponses.add(
@@ -26,4 +37,4 @@ async def test_invalid_metadata_server_check(aresponses):
 
     provider = AzureProvider()
     provider.metadata_url = f'https://{mock_host}'
-    assert await provider.check_metadata_server() is True
+    assert await provider.check_metadata_server() is False

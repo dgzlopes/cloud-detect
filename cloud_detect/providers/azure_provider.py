@@ -35,7 +35,8 @@ class AzureProvider(AbstractProvider):
         try:
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.metadata_url, headers=self.headers) as response:
-                    return response.status == 200
+                    response = await response.json()
+                    return len(response['compute']['vmId']) > 0
         except BaseException:
             return False
 
