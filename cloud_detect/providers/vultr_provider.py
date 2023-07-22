@@ -43,7 +43,4 @@ class VultrProvider(AbstractProvider):
         """
         self.logger.debug('Checking Vultr vendor file')
         vendor_path = Path(self.vendor_file)
-        if vendor_path.is_file():
-            if 'Vultr' in vendor_path.read_text():
-                return True
-        return False
+        return vendor_path.is_file() and 'Vultr' in vendor_path.read_text()
