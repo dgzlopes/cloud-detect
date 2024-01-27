@@ -17,6 +17,9 @@ class AWSProvider(AbstractProvider):
         self.metadata_url = (
             'http://169.254.169.254/latest/dynamic/instance-identity/document'
         )
+        self.metadata_token_url = (
+            'http://169.254.169.254/latest/api/token'
+        )
         self.vendor_files = (
             '/sys/class/dmi/id/product_version', '/sys/class/dmi/id/bios_vendor'
         )
@@ -28,6 +31,11 @@ class AWSProvider(AbstractProvider):
         self.logger.info('Try to identify AWS')
         return self.check_vendor_file() or await self.check_metadata_server()
 
+    async def _get_token(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.put(self.metadata_token_url, headers={'X-aws-ec2-metadata-token-ttl-seconds': '21600'}) as response:
+                return await response.text()
+
     async def check_metadata_server(self):
         """
             Tries to identify AWS via metadata server
@@ -35,7 +43,8 @@ class AWSProvider(AbstractProvider):
         self.logger.debug('Checking AWS metadata')
         try:
             async with aiohttp.ClientSession() as session:
-                async with session.get(self.metadata_url) as response:
+                token = await self._get_token()
+                async with session.get(self.metadata_url, headers={'X-aws-ec2-metadata-token': token}) as response:
                     response = await response.json(content_type=None)
                     if response['imageId'].startswith('ami-',) and response[
                         'instanceId'
