@@ -27,12 +27,17 @@ def test_reading_invalid_vendor_file():
 async def test_valid_metadata_server_check(aresponses):
     mock_host = 'testing_metadata_url.com'
     aresponses.add(
+        mock_host, '/', 'PUT',
+        response='token',
+    )
+    aresponses.add(
         mock_host, '/', 'GET',
         response={'imageId': 'ami-12312412', 'instanceId': 'i-ec12as'},
     )
 
     provider = AWSProvider()
     provider.metadata_url = f'https://{mock_host}'
+    provider.metadata_token_url = f'https://{mock_host}'
     assert await provider.check_metadata_server() is True
 
 
@@ -40,10 +45,15 @@ async def test_valid_metadata_server_check(aresponses):
 async def test_invalid_metadata_server_check(aresponses):
     mock_host = 'testing_metadata_url.com'
     aresponses.add(
+        mock_host, '/', 'PUT',
+        response='token',
+    )
+    aresponses.add(
         mock_host, '/', 'GET',
         response={'imageId': 'some_ID', 'instanceId': 'some_Instance'},
     )
 
     provider = AWSProvider()
     provider.metadata_url = f'https://{mock_host}'
+    provider.metadata_token_url = f'https://{mock_host}'
     assert await provider.check_metadata_server() is False

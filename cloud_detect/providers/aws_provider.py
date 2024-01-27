@@ -31,10 +31,9 @@ class AWSProvider(AbstractProvider):
         self.logger.info('Try to identify AWS')
         return self.check_vendor_file() or await self.check_metadata_server()
 
-    async def _get_token(self):
-        async with aiohttp.ClientSession() as session:
-            async with session.put(self.metadata_token_url, headers={'X-aws-ec2-metadata-token-ttl-seconds': '21600'}) as response:
-                return await response.text()
+    async def _get_token(self, session):
+        async with session.put(self.metadata_token_url, headers={'X-aws-ec2-metadata-token-ttl-seconds': '21600'}) as response:
+            return await response.text()
 
     async def check_metadata_server(self):
         """
@@ -43,7 +42,7 @@ class AWSProvider(AbstractProvider):
         self.logger.debug('Checking AWS metadata')
         try:
             async with aiohttp.ClientSession() as session:
-                token = await self._get_token()
+                token = await self._get_token(session)
                 async with session.get(self.metadata_url, headers={'X-aws-ec2-metadata-token': token}) as response:
                     response = await response.json(content_type=None)
                     if response['imageId'].startswith('ami-',) and response[
