@@ -1,3 +1,4 @@
+import asyncio
 import logging
 from pathlib import Path
 
@@ -31,27 +32,34 @@ class AWSProvider(AbstractProvider):
         self.logger.info('Try to identify AWS')
         return self.check_vendor_file() or await self.check_metadata_server()
 
-    async def _get_token(self, session):
-        async with session.put(self.metadata_token_url, headers={'X-aws-ec2-metadata-token-ttl-seconds': '21600'}) as response:
-            return await response.text()
+    async def _get_metadata_v2(self):
+        async with aiohttp.ClientSession() as session:
+            async with session.put(self.metadata_token_url, headers={'X-aws-ec2-metadata-token-ttl-seconds': '21600'}) as response:
+                token = await response.text()
+        return await self._get_metadata(headers={'X-aws-ec2-metadata-token': token})
+
+    async def _get_metadata(self, headers=None):
+        async with aiohttp.ClientSession() as session:
+            async with session.get(self.metadata_url, headers=headers) as response:
+                response.raise_for_status()
+                response = await response.json(content_type=None)
+                if response['imageId'].startswith('ami-', ) and response[
+                    'instanceId'
+                ].startswith('i-'):
+                    return True
+        return False
 
     async def check_metadata_server(self):
         """
             Tries to identify AWS via metadata server
         """
         self.logger.debug('Checking AWS metadata')
-        try:
-            async with aiohttp.ClientSession() as session:
-                token = await self._get_token(session)
-                async with session.get(self.metadata_url, headers={'X-aws-ec2-metadata-token': token}) as response:
-                    response = await response.json(content_type=None)
-                    if response['imageId'].startswith('ami-',) and response[
-                        'instanceId'
-                    ].startswith('i-'):
-                        return True
-            return False
-        except BaseException:
-            return False
+        results = await asyncio.gather(
+            self._get_metadata(),
+            self._get_metadata_v2(),
+            return_exceptions=True
+        )
+        return any(result for result in results if result is True)
 
     def check_vendor_file(self):
         """
