@@ -1,5 +1,6 @@
 import asyncio
 import logging
+import contextlib
 from pathlib import Path
 
 import aiohttp
@@ -33,16 +34,15 @@ class AWSProvider(AbstractProvider):
         return self.check_vendor_file() or await self.check_metadata_server()
 
     async def _get_metadata_v2(self):
-        try:
+        with contextlib.suppress(BaseException):
             async with aiohttp.ClientSession() as session:
                 async with session.put(self.metadata_token_url, headers={'X-aws-ec2-metadata-token-ttl-seconds': '60'}) as response:
                     token = await response.text()
             return await self._get_metadata(headers={'X-aws-ec2-metadata-token': token})
-        except BaseException:
-            return False
+        return False
 
     async def _get_metadata(self, headers=None):
-        try:
+        with contextlib.suppress(BaseException):
             async with aiohttp.ClientSession() as session:
                 async with session.get(self.metadata_url, headers=headers) as response:
                     response = await response.json(content_type=None)
@@ -50,9 +50,7 @@ class AWSProvider(AbstractProvider):
                         'instanceId'
                     ].startswith('i-'):
                         return True
-            return False
-        except BaseException:
-            return False
+        return False
 
     async def check_metadata_server(self):
         """
