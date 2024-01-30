@@ -61,10 +61,9 @@ class AWSProvider(AbstractProvider):
         self.logger.debug('Checking AWS metadata')
         results = await asyncio.gather(
             self._get_metadata(),
-            self._get_metadata_v2(),
-            return_exceptions=True
+            self._get_metadata_v2()
         )
-        return any(result for result in results if result is True)
+        return any(results)
 
     def check_vendor_file(self):
         """
