@@ -17,7 +17,7 @@ else:
 
 setup(
     name='cloud-detect',
-    version='0.0.12',
+    version='0.0.13',
     description="Module that determines a host's cloud provider",
     long_description=long_description,
     long_description_content_type='text/markdown',
