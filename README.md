@@ -8,7 +8,7 @@
 `cloud-detect` is a Python module that determines a host's cloud provider. Highly inspired by the Go based [Satellite](https://github.com/banzaicloud/satellite), `cloud-detect` uses the same techniques (file systems and provider metadata) to properly identify cloud providers.
 
 ## Features
-- Supports identification of Alibaba, AWS, Azure, Digital Ocean, GCP, Oracle Cloud and Vultr hosts.
+- Supports identification of Alibaba, AWS, Azure, Digital Ocean, GCP, Oracle Cloud, OpenStack and Vultr hosts.
 - Fast and supports asyncio
 - Logging integration.
 - Small and extensible.
@@ -24,7 +24,7 @@
 'unknown'
 ```
 
-> Right now the only possible responses are: 'alibaba', 'aws', 'azure', 'do', 'gcp', 'oci', 'vultr' or 'unknown'
+> Right now the only possible responses are: 'alibaba', 'aws', 'azure', 'do', 'gcp', 'oci', 'openstack', 'vultr' or 'unknown'
 
 > You can get the list of supported providers using
 >>`>>> from cloud_detect import SUPPORTED_PROVIDERS`

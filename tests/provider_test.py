@@ -8,7 +8,7 @@ from cloud_detect.providers import AbstractProvider
 
 def test_supported_providers():
     assert cloud_detect.SUPPORTED_PROVIDERS == \
-        ('alibaba', 'aws', 'azure', 'do', 'gcp', 'oci', 'vultr')
+        ('alibaba', 'aws', 'azure', 'do', 'gcp', 'oci', 'openstack', 'vultr')
 
 
 def test_provider(monkeypatch):

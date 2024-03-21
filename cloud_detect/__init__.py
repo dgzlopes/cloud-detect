@@ -10,10 +10,12 @@ from cloud_detect.providers import DOProvider
 from cloud_detect.providers import GCPProvider
 from cloud_detect.providers import OCIProvider
 from cloud_detect.providers import VultrProvider
+from cloud_detect.providers import OpenStackProvider
 
 __PROVIDER_CLASSES = [
     AlibabaProvider, AWSProvider, AzureProvider,
-    DOProvider, GCPProvider, OCIProvider, VultrProvider,
+    DOProvider, GCPProvider, OCIProvider,
+    OpenStackProvider, VultrProvider,
 ]
 
 
