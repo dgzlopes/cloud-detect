@@ -31,11 +31,12 @@ classifiers = [
 Homepage = "https://github.com/dgzlopes/cloud-detect"
 Repository = "https://github.com/dgzlopes/cloud-detect"
 
-[dependency-groups]
+[project.optional-dependencies]
 dev = [
     "pytest>=8.4",
     "pytest-asyncio>=1.2",
     "aresponses>=3.0",
+    "ruff>=0.15",
 ]
 
 [tool.pytest.ini_options]

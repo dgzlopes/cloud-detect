@@ -41,8 +41,9 @@ pip install cloud-detect
 ## How to contribute
 1. Check for open issues or open a fresh issue to start a discussion around a feature idea or a bug.
 2. Fork [the repository](https://github.com/dgzlopes/cloud-detect) on GitHub to start making your changes to the master branch (or branch off of it).
-3. Write a test which shows that the bug was fixed or that the feature works as expected.
-4. Send a [pull request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) and bug [me](https://github.com/dgzlopes) until it gets merged and published.
+3. Set up a local dev environment: `python -m venv .venv && source .venv/bin/activate && pip install -U pip && pip install -e '.[dev]'`, then run tests with `pytest` and lint with `ruff check .`.
+4. Write a test which shows that the bug was fixed or that the feature works as expected.
+5. Send a [pull request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) and bug [me](https://github.com/dgzlopes) until it gets merged and published.
 
 Some things that would be great to have:
 - Add more cloud providers
