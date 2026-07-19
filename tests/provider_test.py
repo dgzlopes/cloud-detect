@@ -1,6 +1,6 @@
 import asyncio
 
-import pytest   # noqa: F401
+import pytest
 
 import cloud_detect
 from cloud_detect.providers import AbstractProvider

@@ -1,4 +1,4 @@
-import pytest   # noqa: F401
+import pytest
 
 from cloud_detect.providers import VultrProvider
 
@@ -21,7 +21,7 @@ def test_reading_invalid_vendor_file():
 async def test_valid_metadata_server_check(aresponses):
     mock_host = 'testing_metadata_url.com'
     aresponses.add(
-        mock_host, '/', 'GET', response={'instanceid': "67218358"},
+        mock_host, '/', 'GET', response={'instanceid': '67218358'},
     )
 
     provider = VultrProvider()

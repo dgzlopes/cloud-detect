@@ -1,7 +1,6 @@
 import asyncio
 import logging
 import time
-from sys import version_info as py_version
 
 from cloud_detect.providers import AlibabaProvider
 from cloud_detect.providers import AWSProvider
@@ -88,13 +87,7 @@ def provider(timeout=None):
         >>> provider()
         'aws'
     """
-    if py_version.minor >= 7:
-        result = asyncio.run(_identify(timeout))
-    else:
-        loop = asyncio.new_event_loop()
-        result = loop.run_until_complete(_identify(timeout))
-        loop.close()
-    return result
+    return asyncio.run(_identify(timeout))
 
 
 async def async_provider(timeout=None):

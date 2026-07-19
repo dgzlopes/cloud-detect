@@ -2,7 +2,7 @@
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/cloud-detect.svg)](https://pypi.org/project/cloud-detect/)
 [![PyPI](https://img.shields.io/pypi/v/cloud-detect.svg)](https://pypi.org/project/cloud-detect/)
 [![PyPI - License](https://img.shields.io/pypi/l/cloud-detect.svg)](https://github.com/dgzlopes/cloud-detect/blob/master/LICENSE.md)
-[![Build Status](https://github.com/dgzlopes/cloud-detect/workflows/Testing%20for%20Python%20Versions%203.6-3.11%20via%20tox/badge.svg)](https://github.com/dgzlopes/cloud-detect/actions?query=workflow%3A%22Testing+for+Python+Versions+3.6-3.11+via+tox%22)
+[![CI](https://github.com/dgzlopes/cloud-detect/actions/workflows/ci.yml/badge.svg)](https://github.com/dgzlopes/cloud-detect/actions/workflows/ci.yml)
 
 ## About
 `cloud-detect` is a Python module that determines a host's cloud provider. Highly inspired by the Go based [Satellite](https://github.com/banzaicloud/satellite), `cloud-detect` uses the same techniques (file systems and provider metadata) to properly identify cloud providers.
@@ -41,8 +41,9 @@ pip install cloud-detect
 ## How to contribute
 1. Check for open issues or open a fresh issue to start a discussion around a feature idea or a bug.
 2. Fork [the repository](https://github.com/dgzlopes/cloud-detect) on GitHub to start making your changes to the master branch (or branch off of it).
-3. Write a test which shows that the bug was fixed or that the feature works as expected.
-4. Send a [pull request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) and bug [me](https://github.com/dgzlopes) until it gets merged and published.
+3. Set up a local dev environment: `python -m venv .venv && source .venv/bin/activate && pip install -U pip && pip install -e '.[dev]'`, then run tests with `pytest` and lint with `ruff check .`.
+4. Write a test which shows that the bug was fixed or that the feature works as expected.
+5. Send a [pull request](https://help.github.com/en/articles/creating-a-pull-request-from-a-fork) and bug [me](https://github.com/dgzlopes) until it gets merged and published.
 
 Some things that would be great to have:
 - Add more cloud providers

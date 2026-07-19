@@ -2,10 +2,9 @@
 *.py[co]
 *.sw[op]
 
+/.venv
 /.coverage
 /.pytest_cache
-/.tox
-/venv*
 /tmp
 /build
 

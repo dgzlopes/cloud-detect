@@ -1,11 +1,11 @@
 import asyncio
-import logging
 import contextlib
+import logging
 from pathlib import Path
 
 import aiohttp
 
-from . import AbstractProvider
+from .provider import AbstractProvider
 
 
 class AWSProvider(AbstractProvider):
@@ -36,7 +36,8 @@ class AWSProvider(AbstractProvider):
     async def _get_metadata_v2(self):
         with contextlib.suppress(BaseException):
             async with aiohttp.ClientSession() as session:
-                async with session.put(self.metadata_token_url, headers={'X-aws-ec2-metadata-token-ttl-seconds': '60'}) as response:
+                token_headers = {'X-aws-ec2-metadata-token-ttl-seconds': '60'}
+                async with session.put(self.metadata_token_url, headers=token_headers) as response:
                     token = await response.text()
             return await self._get_metadata(headers={'X-aws-ec2-metadata-token': token})
         return False
