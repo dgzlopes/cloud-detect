@@ -3,7 +3,7 @@ from pathlib import Path
 
 import aiohttp
 
-from . import AbstractProvider
+from .provider import AbstractProvider
 
 
 class GCPProvider(AbstractProvider):

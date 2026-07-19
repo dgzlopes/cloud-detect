@@ -1,7 +1,7 @@
 import logging
 from pathlib import Path
 
-from . import AbstractProvider
+from .provider import AbstractProvider
 
 
 class OCIProvider(AbstractProvider):
@@ -26,7 +26,8 @@ class OCIProvider(AbstractProvider):
 
     def check_vendor_file(self):
         """
-            Tries to identify OCI provider by reading the file -> /sys/class/dmi/id/chassis_asset_tag # noqa
+            Tries to identify OCI provider by reading the file
+            /sys/class/dmi/id/chassis_asset_tag
         """
         self.logger.debug('Checking OCI vendor file')
         oci_path = Path(self.vendor_file)

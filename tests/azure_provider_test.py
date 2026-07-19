@@ -1,4 +1,4 @@
-import pytest   # noqa: F401
+import pytest  # noqa: F401
 
 from cloud_detect.providers import AzureProvider
 
@@ -21,7 +21,8 @@ def test_reading_invalid_vendor_file():
 async def test_valid_metadata_server_check(aresponses):
     mock_host = 'testing_metadata_url.com'
     aresponses.add(
-        mock_host, '/', 'GET', response={ "compute": { "vmId": "2d907167-1eed-4ede-a75e-5ef04603b90d" }},
+        mock_host, '/', 'GET',
+        response={'compute': {'vmId': '2d907167-1eed-4ede-a75e-5ef04603b90d'}},
     )
 
     provider = AzureProvider()

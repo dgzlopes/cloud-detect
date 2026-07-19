@@ -1,4 +1,4 @@
-import pytest   # noqa: F401
+import pytest  # noqa: F401
 
 from cloud_detect.providers import DOProvider
 
