@@ -48,3 +48,15 @@ pip install cloud-detect
 Some things that would be great to have:
 - Add more cloud providers
 - Add codecov
+
+## Publishing a release
+Requires maintainer access to the project on PyPI (authenticate with an API token: username `__token__`, password `pypi-...`).
+1. Bump `version` in `pyproject.toml`.
+2. Build and upload from the dev virtualenv (see "How to contribute" above), so nothing is installed into the system Python:
+```
+source .venv/bin/activate
+rm -rf dist
+pip install -U build twine
+python -m build
+twine upload dist/*
+```
