@@ -1,4 +1,4 @@
-import pytest  # noqa: F401
+import pytest
 
 from cloud_detect.providers import AzureProvider
 

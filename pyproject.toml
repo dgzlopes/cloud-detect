@@ -36,11 +36,7 @@ dev = [
     "pytest>=8.4",
     "pytest-asyncio>=1.2",
     "aresponses>=3.0",
-    "pre-commit>=4.3",
 ]
-
-[tool.hatch.build.targets.wheel]
-packages = ["cloud_detect"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
@@ -48,10 +44,12 @@ asyncio_default_fixture_loop_scope = "function"
 
 [tool.ruff]
 line-length = 100
-target-version = "py39"
 
 [tool.ruff.lint]
-select = ["E", "F", "W", "I"]
+select = ["E", "F", "W", "I", "Q", "T10"]
+
+[tool.ruff.lint.flake8-quotes]
+inline-quotes = "single"
 
 [tool.ruff.lint.isort]
 force-single-line = true

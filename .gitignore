@@ -4,8 +4,6 @@
 
 /.coverage
 /.pytest_cache
-/.tox
-/venv*
 /tmp
 /build
 
