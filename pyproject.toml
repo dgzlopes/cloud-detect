@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "cloud-detect"
-version = "0.0.14"
+version = "0.0.15"
 description = "Module that determines a host's cloud provider"
 readme = "README.md"
 license = "MIT"
